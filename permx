@@ -66,10 +66,16 @@ Searching on internet we found that Chamilo's config file are located under Cham
 // Database connection settings.
 $_configuration['db_host'] = 'localhost';
 $_configuration['db_port'] = '3306';
-$_configuration['main_database'] = 'chamilo';
-$_configuration['db_user'] = 'chamilo';
-$_configuration['db_password'] = '03F6lY3uXAP2bkW8';
+$_configuration['main_database'] = '************';
+$_configuration['db_user'] = '************';
+$_configuration['db_password'] = '************';
 // Security word for password recovery
-$_configuration['security_key'] = '08ecc755d674efaa6b1ab289e6053a9b';
+$_configuration['security_key'] = '************';;
+
+We notice also that there is a user called mtz:
+
+mtz:x:1000:1000:mtz:/home/mtz:/bin/bash
+
+After investigating on the www-data files we got to the point there is no other info usefull to make priv esc, so i got the idea of trying the "db_password" found before as ssh passw for user mtz and voilà we got the user!!ù
 
 
