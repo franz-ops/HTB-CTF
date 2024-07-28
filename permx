@@ -76,6 +76,35 @@ We notice also that there is a user called mtz:
 
 mtz:x:1000:1000:mtz:/home/mtz:/bin/bash
 
-After investigating on the www-data files we got to the point there is no other info usefull to make priv esc, so i got the idea of trying the "db_password" found before as ssh passw for user mtz and voilà we got the user!!ù
+After investigating on the www-data files we got to the point there is no other info usefull to make priv esc, so i got the idea of trying the "db_password" found before as ssh passw for user mtz and voilà we got the user!!
+
+Now we are in with mtz user. Let's search for entry points to do priv esc.
+We start linpeas and do some checks and we found out there is a script we can launch as root in /opt/acl.sh:
+
+#!/bin/bash
+
+if [ "$#" -ne 3 ]; then
+    /usr/bin/echo "Usage: $0 user perm file"
+    exit 1
+fi
+
+user="$1"
+perm="$2"
+target="$3"
+
+if [[ "$target" != /home/mtz/* || "$target" == *..* ]]; then
+    /usr/bin/echo "Access denied."
+    exit 1
+fi
+
+# Check if the path is a file
+if [ ! -f "$target" ]; then
+    /usr/bin/echo "Target must be a file."
+    exit 1
+fi
+
+/usr/bin/sudo /usr/bin/setfacl -m u: "$user":"$perm" "$target"
+
+
 
 
