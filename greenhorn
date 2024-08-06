@@ -85,3 +85,4 @@ Searching online I found a CVE for file upload used for RCE: https://github.com/
 
 Following the poc we managed to upload and use the rev shell and gaining a shell on the www-data user.
 
+Inside var/www/html/pluck/setting we found reference to some token used into admin.php page to check the session. we can try to use it to log as admin
